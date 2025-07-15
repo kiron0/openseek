@@ -16,6 +16,7 @@ const keywords = [
   "search engine",
 ]
 const defaultAvatar = "/favicon.ico"
+const ogImage = "/og.png"
 
 export const Config = {
   title,
@@ -23,4 +24,5 @@ export const Config = {
   description,
   keywords,
   defaultAvatar,
+  ogImage,
 }

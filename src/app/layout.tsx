@@ -24,25 +24,25 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       images: [
         {
-          url: new URL("/home.jpg", BASE_URL),
+          url: new URL(Config.ogImage, BASE_URL),
           width: 800,
           height: 600,
           alt: Config.title,
         },
         {
-          url: new URL("/home.jpg", BASE_URL),
+          url: new URL(Config.ogImage, BASE_URL),
           width: 1200,
           height: 900,
           alt: Config.title,
         },
         {
-          url: new URL("/home.jpg", BASE_URL),
+          url: new URL(Config.ogImage, BASE_URL),
           width: 1920,
           height: 1440,
           alt: Config.title,
         },
         {
-          url: new URL("/home.jpg", BASE_URL),
+          url: new URL(Config.ogImage, BASE_URL),
           width: 4000,
           height: 3000,
           alt: Config.title,

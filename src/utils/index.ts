@@ -55,12 +55,7 @@ export const engineOptions: EngineOption[] = [
   {
     value: "bing",
     name: "Bing",
-    logo: "https://www.bing.com/sa/simg/favicon-2x.ico",
-  },
-  {
-    value: "yahoo",
-    name: "Yahoo",
-    logo: "https://s.yimg.com/rz/l/favicon.ico",
+    logo: "https://www.bing.com/favicon.ico",
   },
   { value: "yandex", name: "Yandex", logo: "https://yandex.com/favicon.ico" },
   { value: "baidu", name: "Baidu", logo: "https://www.baidu.com/favicon.ico" },
@@ -82,9 +77,8 @@ export const engineOptions: EngineOption[] = [
   {
     value: "brave",
     name: "Brave Search",
-    logo: "https://brave.com/static-assets/images/brave-logo-sans-text.svg",
+    logo: "https://brave.com/favicon.ico",
   },
-  { value: "ask", name: "Ask.com", logo: "https://www.ask.com/favicon.ico" },
   {
     value: "filepursuit",
     name: "FilePursuit",

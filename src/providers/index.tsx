@@ -1,22 +1,24 @@
-import { Toaster } from "@/components/ui/toaster";
-import NextTopLoader from "nextjs-toploader";
-import { ThemeProvider } from "./theme-provider";
+import NextTopLoader from "nextjs-toploader"
+
+import { Toaster } from "@/components/ui/toaster"
+import { ThemeSwitcher } from "@/components/theme-switcher"
+
+import { ThemeProvider } from "./theme-provider"
 
 export default function Providers({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="light"
       disableTransitionOnChange
     >
-      <main>{children}</main>
+      <ThemeSwitcher>{children}</ThemeSwitcher>
       <Toaster />
       <NextTopLoader />
     </ThemeProvider>
-  );
+  )
 }

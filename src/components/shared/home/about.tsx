@@ -1,19 +1,28 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 export function About() {
   return (
     <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Search Techniques</CardTitle>
+          <CardTitle>Search Techniques</CardTitle>
+          <CardDescription>
+            Use specific search terms to find open directories.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-3">
+          <ul className="text-muted-foreground space-y-3">
             <li className="flex items-start">
               <span className="mr-2">•</span>
               <span>
                 Use specific search terms:{" "}
-                <span className="font-mono text-blue-400">
+                <span className="font-mono text-sky-500">
                   The.Blacklist.S01
                 </span>
               </span>
@@ -22,16 +31,14 @@ export function About() {
               <span className="mr-2">•</span>
               <span>
                 For TV shows:{" "}
-                <span className="font-mono text-blue-400">
-                  Show.Name.S01E01
-                </span>
+                <span className="font-mono text-sky-500">Show.Name.S01E01</span>
               </span>
             </li>
             <li className="flex items-start">
               <span className="mr-2">•</span>
               <span>
                 For music:{" "}
-                <span className="font-mono text-blue-400">
+                <span className="font-mono text-sky-500">
                   Artist.Album.Year
                 </span>
               </span>
@@ -40,7 +47,7 @@ export function About() {
               <span className="mr-2">•</span>
               <span>
                 For software:{" "}
-                <span className="font-mono text-blue-400">
+                <span className="font-mono text-sky-500">
                   Software.Name.v1.0
                 </span>
               </span>
@@ -52,10 +59,12 @@ export function About() {
           </ul>
         </CardContent>
       </Card>
-
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">About This Tool</CardTitle>
+          <CardTitle>About This Tool</CardTitle>
+          <CardDescription>
+            Find open directories for videos, music, books, and more.
+          </CardDescription>
         </CardHeader>
         <CardContent className="text-muted-foreground space-y-3">
           <p>

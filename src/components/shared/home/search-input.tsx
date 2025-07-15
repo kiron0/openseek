@@ -30,7 +30,7 @@ export function SearchInput() {
   const [engine, setEngine] = React.useState<EngineOption>(engineOptions[0])
   const [query, setQuery] = React.useState<string>("")
 
-  const startSearch = () => {
+  const startSearch = React.useCallback(async () => {
     if (!query.trim()) return
 
     let finalQuery = query
@@ -38,17 +38,13 @@ export function SearchInput() {
       "-inurl:(jsp|pl|php|html|aspx|htm|cf|shtml) intitle:index.of -inurl:(listen77|mp3raid|mp3toss|mp3drug|index_of|index-of|wallywashis|downloadmana)"
 
     if (!fileType || fileType.value === "-1") {
-      if (engine.value === "filepursuit") {
-        finalQuery = "all"
-      } else {
-        finalQuery = `${query} ${baseFilter}`
-      }
+      finalQuery =
+        engine.value === "filepursuit" ? "all" : `${query} ${baseFilter}`
     } else {
-      if (engine.value === "filepursuit") {
-        finalQuery = fileType.resType
-      } else {
-        finalQuery = `${query} +(${fileType.value}) ${baseFilter}`
-      }
+      finalQuery =
+        engine.value === "filepursuit"
+          ? fileType.resType
+          : `${query} +(${fileType.value}) ${baseFilter}`
     }
 
     let url = ""
@@ -58,9 +54,6 @@ export function SearchInput() {
         break
       case "bing":
         url = `https://www.bing.com/search?q=${encodeURIComponent(finalQuery)}`
-        break
-      case "yahoo":
-        url = `https://search.yahoo.com/search?p=${encodeURIComponent(finalQuery)}`
         break
       case "yandex":
         url = `https://yandex.com/search/?text=${encodeURIComponent(finalQuery)}`
@@ -80,16 +73,15 @@ export function SearchInput() {
       case "brave":
         url = `https://search.brave.com/search?q=${encodeURIComponent(finalQuery)}`
         break
-      case "ask":
-        url = `https://www.ask.com/web?q=${encodeURIComponent(finalQuery)}`
-        break
       case "filepursuit":
         url = `https://filepursuit.com/search/${query.trim().replace(/ /g, "+")}/type/${finalQuery}`
         break
+      default:
+        return
     }
 
     if (typeof window !== "undefined") window.open(url, "_blank")
-  }
+  }, [query, fileType, engine])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -194,7 +186,7 @@ export function SearchInput() {
               placeholder={fileType ? fileType.placeholder : "Search anything"}
             />
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-end">
             <Button
               type="submit"
               className="w-full lg:w-auto"

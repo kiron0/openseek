@@ -1,32 +1,68 @@
-import { Config } from "@/config";
-import { cn } from "@/lib/utils";
-import Providers from "@/providers";
-import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import type { Metadata } from "next"
+import { Space_Grotesk } from "next/font/google"
+import { Config } from "@/config"
+import Providers from "@/providers"
 
-const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"] });
+import { cn } from "@/lib/utils"
 
-import "@/styles/globals.css";
+import "@/styles/globals.css"
 
-export const metadata: Metadata = {
-  title: {
-    template: `%s | ${Config.title} - ${Config.slogan}`,
-    absolute: `${Config.title} - ${Config.slogan}`,
-  },
-  description: Config.description,
-  keywords: Config.keywords,
-};
+import { getBaseURL } from "@/utils/base-url"
+
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] })
+
+export async function generateMetadata(): Promise<Metadata> {
+  const BASE_URL = await getBaseURL()
+
+  return {
+    metadataBase: new URL(BASE_URL),
+    title: {
+      template: `%s | ${Config.title} - ${Config.slogan}`,
+      absolute: `${Config.title} - ${Config.slogan}`,
+    },
+    description: Config.description,
+    openGraph: {
+      images: [
+        {
+          url: new URL("/home.jpg", BASE_URL),
+          width: 800,
+          height: 600,
+          alt: Config.title,
+        },
+        {
+          url: new URL("/home.jpg", BASE_URL),
+          width: 1200,
+          height: 900,
+          alt: Config.title,
+        },
+        {
+          url: new URL("/home.jpg", BASE_URL),
+          width: 1920,
+          height: 1440,
+          alt: Config.title,
+        },
+        {
+          url: new URL("/home.jpg", BASE_URL),
+          width: 4000,
+          height: 3000,
+          alt: Config.title,
+        },
+      ],
+    },
+    keywords: Config.keywords,
+  }
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("antialiased", jetBrainsMono.className)}>
+      <body className={cn("antialiased", spaceGrotesk.className)}>
         <Providers>{children}</Providers>
       </body>
     </html>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import Home from "@/components/shared/home";
+import { Home } from "@/components/shared/home"
 
 export default function Page() {
-  return <Home />;
+  return <Home />
 }

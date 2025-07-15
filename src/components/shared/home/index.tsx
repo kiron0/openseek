@@ -1,29 +1,25 @@
-import ToggleTheme from "@/components/toggle-theme";
-import { buttonVariants } from "@/components/ui/button";
-import { Config } from "@/config";
-import Link from "next/link";
+import { Config } from "@/config"
 
-export default function Home() {
+import { About } from "./about"
+import { Footer } from "./footer"
+import { SearchInput } from "./search-input"
+
+export function Home() {
   return (
-    <div className="relative flex h-screen flex-col items-center justify-center space-y-4">
-      <h1 className="text-4xl font-bold">{Config.title}</h1>
-      <p className="text-center text-balance">{Config.description}</p>
-      <div className="flex space-x-2">
-        <Link href="#" className={buttonVariants({ variant: "outline" })}>
-          Learn More
-        </Link>
-        <a
-          href="https://github.com/kironix/glow-next"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={buttonVariants({ variant: "default" })}
-        >
-          Get Started
-        </a>
+    <>
+      <div className="mx-auto max-w-7xl py-12">
+        <div className="mb-12 text-center">
+          <h1 className="from-primary to-secondary mb-4 bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent lg:text-5xl">
+            {Config.title}
+          </h1>
+          <p className="text-muted-foreground mx-auto max-w-2xl text-base lg:text-lg">
+            {Config.slogan}
+          </p>
+        </div>
+        <SearchInput />
+        <About />
       </div>
-      <div className="absolute top-4 right-4">
-        <ToggleTheme />
-      </div>
-    </div>
-  );
+      <Footer />
+    </>
+  )
 }

@@ -82,7 +82,7 @@ export function About() {
           whileHover={{ y: -5 }}
           className="h-full"
         >
-          <Card className="hover:border-primary/30 hover:shadow-primary/5 bg-card/95 group flex h-full flex-col backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+          <Card className="group hover:border-primary/30 hover:shadow-primary/5 bg-card/95 flex h-full flex-col backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
             <CardContent className="flex-1 space-y-3">
               <div className="hover:bg-muted/50 flex items-start gap-3 rounded-lg p-2 transition-colors">
                 <div className="mt-1 rounded-full bg-blue-500/20 p-1">
@@ -165,7 +165,7 @@ export function About() {
           whileHover={{ y: -5 }}
           className="h-full"
         >
-          <Card className="hover:border-primary/30 hover:shadow-primary/5 bg-card/95 group flex h-full flex-col backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+          <Card className="group hover:border-primary/30 hover:shadow-primary/5 bg-card/95 flex h-full flex-col backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
             <CardContent className="flex-1">
               <ul className="space-y-3">
                 <li className="hover:bg-muted/50 flex items-start gap-3 rounded-lg p-2 transition-colors">

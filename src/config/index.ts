@@ -17,7 +17,7 @@ export const Config = {
     "search engine",
   ],
   defaultAvatar: "/favicon.ico",
-  ogImage: "/og-image.png",
+  ogImage: "/og.png",
   author: {
     name: "Toufiq Hasan Kiron",
     github: "https://github.com/kiron0",

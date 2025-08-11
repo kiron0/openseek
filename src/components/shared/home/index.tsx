@@ -8,7 +8,7 @@ import { Search } from "lucide-react"
 import { About } from "@/components/shared/home/about"
 import { Footer } from "@/components/shared/home/footer"
 import { SearchInput } from "@/components/shared/home/search-input"
-import { ThemeSwitcher } from "@/components/theme-swicher"
+import { ThemeSwitcher } from "@/components/theme-switcher"
 
 export function Home() {
   const scrollToSection = useCallback((sectionId: string) => {

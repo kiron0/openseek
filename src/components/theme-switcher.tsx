@@ -4,13 +4,7 @@ import * as React from "react"
 import { MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/components/ui/button"
-
-interface ThemeSwitcherProps {
-  children: React.ReactNode
-}
-
-export function ThemeSwitcher({ children }: ThemeSwitcherProps) {
+export function ThemeSwitcher() {
   const { setTheme, resolvedTheme } = useTheme()
 
   const toggleTheme = React.useCallback(() => {
@@ -18,19 +12,13 @@ export function ThemeSwitcher({ children }: ThemeSwitcherProps) {
   }, [resolvedTheme, setTheme])
 
   return (
-    <main className="relative">
-      {children}
-      <div className="fixed top-2 right-2 z-50">
-        <Button
-          variant="outline"
-          className="group/toggle h-8 w-8 px-0"
-          onClick={toggleTheme}
-        >
-          <SunIcon className="hidden [html.dark_&]:block" />
-          <MoonIcon className="hidden [html.light_&]:block" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </div>
-    </main>
+    <button
+      onClick={toggleTheme}
+      className="text-primary bg-primary/5 hover:bg-primary/10 cursor-pointer rounded-lg p-2 transition-colors"
+    >
+      <SunIcon className="hidden h-4 w-4 [html.dark_&]:block" />
+      <MoonIcon className="hidden h-4 w-4 [html.light_&]:block" />
+      <span className="sr-only">Toggle theme</span>
+    </button>
   )
 }

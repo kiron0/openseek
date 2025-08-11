@@ -5,11 +5,10 @@ import { Config } from "@/config"
 import { motion } from "framer-motion"
 import { Search } from "lucide-react"
 
-import { ThemeSwitcher } from "@/components/theme-swicher"
-
 import { About } from "@/components/shared/home/about"
 import { Footer } from "@/components/shared/home/footer"
 import { SearchInput } from "@/components/shared/home/search-input"
+import { ThemeSwitcher } from "@/components/theme-swicher"
 
 export function Home() {
   const scrollToSection = useCallback((sectionId: string) => {
@@ -28,16 +27,6 @@ export function Home() {
 
   return (
     <>
-<<<<<<< HEAD
-      <div className="mx-auto max-w-7xl px-4 py-12 xl:px-0">
-        <div className="mb-12 text-center">
-          <h1 className="from-primary to-secondary mb-4 bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent lg:text-5xl">
-            {Config.title}
-          </h1>
-          <p className="text-muted-foreground mx-auto max-w-2xl text-base lg:text-lg">
-            {Config.slogan}
-          </p>
-=======
       <header className="border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
@@ -150,7 +139,6 @@ export function Home() {
           >
             <About />
           </motion.section>
->>>>>>> 7d17f39 (chore update)
         </div>
       </div>
       <Footer scrollToSection={scrollToSection} />

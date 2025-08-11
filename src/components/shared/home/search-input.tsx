@@ -206,19 +206,11 @@ export function SearchInput() {
               <PencilLine className="text-muted-foreground absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 transform" />
             </div>
           </div>
-<<<<<<< HEAD
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              className="w-full lg:w-auto"
-              disabled={!query.trim()}
-=======
           <div className="flex justify-center md:pt-4">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
->>>>>>> 7d17f39 (chore update)
             >
               <Button
                 type="submit"

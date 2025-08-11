@@ -1,14 +1,4 @@
 import { Config } from "@/config"
-<<<<<<< HEAD
-
-export function Footer() {
-  return (
-    <footer className="text-muted-foreground mt-12 py-6 text-center text-sm">
-      <p>
-        &copy; {new Date().getFullYear()} Copyright | {Config.title}
-      </p>
-      <p>All rights reserved.</p>
-=======
 import { motion } from "framer-motion"
 import { Github, Heart, Mail, Search, Twitter } from "lucide-react"
 
@@ -182,7 +172,6 @@ export function Footer({ scrollToSection }: FooterProps) {
           </motion.div>
         </motion.div>
       </motion.div>
->>>>>>> 7d17f39 (chore update)
     </footer>
   )
 }

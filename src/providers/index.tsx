@@ -1,7 +1,10 @@
 import NextTopLoader from "nextjs-toploader"
 
 import { Toaster } from "@/components/ui/toaster"
+<<<<<<< HEAD
 import { ThemeSwitcher } from "@/components/theme-switcher"
+=======
+>>>>>>> 7d17f39 (chore update)
 
 import { ThemeProvider } from "./theme-provider"
 
@@ -18,7 +21,7 @@ export default function Providers({
     >
       <ThemeSwitcher>{children}</ThemeSwitcher>
       <Toaster />
-      <NextTopLoader />
+      <NextTopLoader showForHashAnchor={false} />
     </ThemeProvider>
   )
 }

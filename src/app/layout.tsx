@@ -7,7 +7,11 @@ import { cn } from "@/lib/utils"
 
 import "@/styles/globals.css"
 
+<<<<<<< HEAD
 import { getBaseURL } from "@/utils/base-url"
+=======
+import { getBaseURL } from "@/utils"
+>>>>>>> 7d17f39 (chore update)
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] })
 

@@ -144,8 +144,9 @@
     -moz-appearance: textfield;
   }
 
+  /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
@@ -154,17 +155,36 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
     border-radius: 10px;
+    transition: all 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-foreground);
+    background: linear-gradient(to bottom, var(--color-secondary), var(--color-primary));
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .glass {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Smooth transitions for interactive elements (but not all elements to avoid conflicts with Framer Motion) */
+  button, input, select, textarea, a {
+    transition: all 0.2s ease;
   }
 
   /* Top Loader */
   #nprogress .bar {
-    @apply !bg-primary;
+    @apply !bg-gradient-to-r !from-primary !to-secondary;
+    height: 3px !important;
   }
 
   #nprogress .spinner-icon {
@@ -173,7 +193,25 @@
 
   #nprogress .peg {
     box-shadow:
-      0 0 10px hsla(var(--primary)),
-      0 0 5px hsla(var(--primary)) !important;
+      0 0 10px var(--color-primary),
+      0 0 5px var(--color-primary) !important;
+  }
+
+  /* Selection styles */
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  ::-moz-selection {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }

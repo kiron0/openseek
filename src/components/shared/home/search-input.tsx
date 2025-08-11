@@ -4,15 +4,10 @@ import * as React from "react"
 import Image from "next/image"
 import { EngineOption, FileTypeOption } from "@/types"
 import { engineOptions, fileTypeOptions } from "@/utils"
+import { motion } from "framer-motion"
+import { Filter, Globe, PencilLine, Search, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -89,18 +84,20 @@ export function SearchInput() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Search Directories</CardTitle>
-        <CardDescription>
-          Use advanced search techniques to find open directories
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <Label className="mb-2 text-sm">File Type</Label>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      whileHover={{ y: -2 }}
+    >
+      <div className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border p-6 shadow-sm">
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
+            <div className="space-y-3">
+              <Label className="flex items-center gap-2 text-sm font-medium">
+                <Filter className="text-primary h-4 w-4" />
+                File Type
+              </Label>
               <Select
                 value={fileType?.value || ""}
                 onValueChange={(value) =>
@@ -109,23 +106,30 @@ export function SearchInput() {
                   )
                 }
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="hover:border-primary/50 h-12 w-full transition-colors">
                   <SelectValue placeholder="Select file type">
                     {fileType ? (
                       <div className="flex items-center gap-2">
-                        <span>{fileType.icon}</span>
+                        <span className="text-lg">{fileType.icon}</span>
                         <span>{fileType.label}</span>
                       </div>
                     ) : (
-                      "Select file type"
+                      <div className="text-muted-foreground flex items-center gap-2">
+                        <Sparkles className="h-4 w-4" />
+                        <span>Select file type</span>
+                      </div>
                     )}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {fileTypeOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      className="hover:bg-primary/10"
+                    >
                       <div className="flex items-center gap-2">
-                        <span>{option.icon}</span>
+                        <span className="text-lg">{option.icon}</span>
                         <span>{option.label}</span>
                       </div>
                     </SelectItem>
@@ -133,8 +137,11 @@ export function SearchInput() {
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <Label className="mb-2 text-sm">Search Engine</Label>
+            <div className="space-y-3">
+              <Label className="flex items-center gap-2 text-sm font-medium">
+                <Globe className="text-primary h-4 w-4" />
+                Search Engine
+              </Label>
               <Select
                 value={engine.value}
                 onValueChange={(value) =>
@@ -144,7 +151,7 @@ export function SearchInput() {
                   )
                 }
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="hover:border-primary/50 h-12 w-full transition-colors">
                   <SelectValue placeholder="Select engine">
                     <div className="flex items-center gap-2">
                       <Image
@@ -160,7 +167,11 @@ export function SearchInput() {
                 </SelectTrigger>
                 <SelectContent>
                   {engineOptions.map((engine) => (
-                    <SelectItem key={engine.value} value={engine.value}>
+                    <SelectItem
+                      key={engine.value}
+                      value={engine.value}
+                      className="hover:bg-primary/10"
+                    >
                       <div className="flex items-center gap-2">
                         <Image
                           src={engine.logo}
@@ -177,26 +188,64 @@ export function SearchInput() {
               </Select>
             </div>
           </div>
-          <div>
-            <Label className="mb-2 text-sm">Search Query</Label>
-            <Input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={fileType ? fileType.placeholder : "Search anything"}
-            />
+          <div className="space-y-3">
+            <Label className="flex items-center gap-2 text-sm font-medium">
+              <Search className="text-primary h-4 w-4" />
+              Search Query
+            </Label>
+            <div className="relative">
+              <Input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={
+                  fileType ? fileType.placeholder : "Enter your search terms..."
+                }
+                className="pr-4 pl-12 md:h-14 md:text-base"
+              />
+              <PencilLine className="text-muted-foreground absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 transform" />
+            </div>
           </div>
+<<<<<<< HEAD
           <div className="flex justify-end">
             <Button
               type="submit"
               className="w-full lg:w-auto"
               disabled={!query.trim()}
+=======
+          <div className="flex justify-center md:pt-4">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+>>>>>>> 7d17f39 (chore update)
             >
-              Search Directories
-            </Button>
+              <Button
+                type="submit"
+                className="w-full text-sm font-medium shadow-lg transition-all duration-200 hover:shadow-xl md:h-14 md:w-auto md:px-8 md:text-base"
+                disabled={!query.trim()}
+              >
+                <Search className="h-5 w-5" />
+                Search Directories
+                <motion.div
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 10, -10, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  style={{ display: "inline-block" }}
+                >
+                  <Sparkles className="ml-2 h-4 w-4" />
+                </motion.div>
+              </Button>
+            </motion.div>
           </div>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </motion.div>
   )
 }

@@ -114,9 +114,9 @@ export function Home() {
         <div className="relative mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
           <section
             id="home"
-            className="min-h-[calc(100vh-4rem)] py-18 lg:py-24"
+            className="flex min-h-[calc(100vh-4rem)] items-center py-18 lg:py-24"
           >
-            <div className="space-y-12">
+            <div className="w-full space-y-12">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -162,30 +162,34 @@ export function Home() {
                   See Techniques
                 </Button>
               </motion.div>
-
-              <motion.div
-                id="search"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              >
-                <div className="border-border/60 bg-background/78 rounded-[2rem] border p-5 shadow-xl backdrop-blur sm:p-8">
-                  <div className="mb-6 flex flex-col gap-2 text-left">
-                    <p className="text-sm font-semibold tracking-[0.18em] uppercase">
-                      Search
-                    </p>
-                    <p className="text-muted-foreground text-sm">
-                      Choose options. Type title. Open cleaner query.
-                    </p>
-                  </div>
-                  <SearchInput />
-                </div>
-              </motion.div>
             </div>
           </section>
 
-          <section id="signals" className="scroll-mt-24 pt-10">
-            <About />
+          <section id="search" className="scroll-mt-24 py-8 lg:py-12">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <div className="border-border/60 bg-background/78 rounded-[2rem] border p-5 shadow-xl backdrop-blur sm:p-8">
+                <div className="mb-6 flex flex-col gap-2 text-left">
+                  <p className="text-sm font-semibold tracking-[0.18em] uppercase">
+                    Search
+                  </p>
+                  <p className="text-muted-foreground text-sm">
+                    Choose options. Type title. Open cleaner query.
+                  </p>
+                </div>
+                <SearchInput />
+              </div>
+            </motion.div>
+          </section>
+
+          <section id="about" className="scroll-mt-24">
+            <section id="signals" className="scroll-mt-24 pt-10">
+              <About />
+            </section>
           </section>
         </div>
       </main>

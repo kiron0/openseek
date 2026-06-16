@@ -9,7 +9,10 @@ import "@/styles/globals.css"
 
 import { getBaseURL } from "@/utils"
 
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] })
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   const BASE_URL = await getBaseURL()
@@ -60,7 +63,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("antialiased", spaceGrotesk.className)}>
+      <body
+        className={cn(
+          "font-sans antialiased",
+          spaceGrotesk.className,
+          spaceGrotesk.variable
+        )}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,146 +1,216 @@
 "use client"
 
-import { useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Config } from "@/config"
 import { motion } from "framer-motion"
-import { Search } from "lucide-react"
+import { ArrowDownRight, ArrowUp, Compass, Search } from "lucide-react"
+
+import { cn } from "@/lib/utils"
 
 import { About } from "@/components/home/about"
 import { Footer } from "@/components/home/footer"
 import { SearchInput } from "@/components/home/search-input"
 import { ThemeSwitcher } from "@/components/theme-switcher"
+import { Button } from "@/components/ui/button"
 
 export function Home() {
+  const [scrolled, setScrolled] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24)
+      setShowScrollTop(window.scrollY > 320)
+    }
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId)
-    if (element) {
-      const headerOffset = 80 // Height of sticky header + some padding
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+    if (!element) return
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
-    }
+    const headerOffset = 88
+    const elementPosition = element.getBoundingClientRect().top
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    })
+  }, [])
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
   }, [])
 
   return (
     <>
-      <header className="border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <button
-              onClick={() => scrollToSection("home")}
-              className="hover:text-primary flex items-center space-x-2 transition-colors"
-            >
-              <Search className="h-6 w-6" />
-              <span className="text-lg font-bold sm:text-xl">
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+          scrolled &&
+            "border-border/60 bg-background/30 border-b shadow-sm backdrop-blur"
+        )}
+      >
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <button
+            onClick={() => scrollToSection("home")}
+            className="flex items-center gap-3 text-left"
+          >
+            <div className="from-primary to-chart-2 text-primary-foreground flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg">
+              <Search className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold tracking-[0.24em] uppercase">
                 {Config.title}
-              </span>
+              </p>
+              <p className="text-muted-foreground text-xs">
+                index-focused search
+              </p>
+            </div>
+          </button>
+
+          <div className="hidden items-center gap-6 md:flex">
+            <button
+              onClick={() => scrollToSection("search")}
+              className="text-muted-foreground hover:text-foreground text-sm"
+            >
+              Search
             </button>
+            <button
+              onClick={() => scrollToSection("techniques")}
+              className="text-muted-foreground hover:text-foreground text-sm"
+            >
+              Techniques
+            </button>
+            <button
+              onClick={() => scrollToSection("signals")}
+              className="text-muted-foreground hover:text-foreground text-sm"
+            >
+              Why it works
+            </button>
+            <ThemeSwitcher />
+          </div>
+
+          <div className="md:hidden">
             <ThemeSwitcher />
           </div>
         </div>
       </header>
 
-      <div className="relative min-h-screen">
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            className="absolute -top-40 -right-40 h-80 w-80 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="bg-secondary/20 absolute -bottom-40 -left-40 h-80 w-80 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
+      <main className="relative overflow-hidden pt-16">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-x-0 top-0 h-[38rem] bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.16),transparent_45%),radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.18),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.16),transparent_24%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(255,255,255,0.24)_55%,transparent)] dark:bg-[linear-gradient(to_bottom,transparent,rgba(255,255,255,0.04)_55%,transparent)]" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8 lg:py-32">
+        <div className="relative mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
           <section
             id="home"
-            className="mb-16 scroll-mt-20 text-center sm:mb-20 lg:mb-24"
+            className="min-h-[calc(100vh-4rem)] py-18 lg:py-24"
           >
-            <motion.h1
-              className="text-primary mb-6 text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl xl:text-7xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              {Config.title}
-            </motion.h1>
-            <motion.p
-              className="text-muted-foreground mx-auto max-w-3xl px-4 text-base leading-relaxed sm:text-lg lg:text-xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            >
-              {Config.slogan}
-            </motion.p>
-            <motion.div
-              className="mt-6 flex justify-center px-4 sm:mt-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            >
-              <div className="bg-muted/50 flex items-center space-x-2 rounded-full px-3 py-2 text-sm sm:px-4">
-                <motion.div
-                  className="h-2 w-2 rounded-full bg-green-500"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 1, 0.5],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <span className="text-xs sm:text-sm">
-                  Search millions of open directories
-                </span>
-              </div>
-            </motion.div>
+            <div className="space-y-12">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="space-y-6 text-center"
+              >
+                <div className="border-border/70 bg-background/55 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium tracking-[0.2em] uppercase shadow-sm backdrop-blur">
+                  <Compass className="text-primary h-3.5 w-3.5" />
+                  live query builder
+                </div>
+
+                <h1 className="mx-auto max-w-4xl text-5xl leading-[0.95] font-semibold tracking-tight sm:text-6xl lg:text-7xl">
+                  Search open directories
+                  <span className="text-primary block">with less junk.</span>
+                </h1>
+
+                <p className="text-muted-foreground mx-auto max-w-2xl text-base leading-8 sm:text-lg">
+                  {Config.description} Pick engine, file type, mode. Query
+                  builder does ext targeting, index signals, noise filtering.
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="flex flex-wrap justify-center gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+              >
+                <Button
+                  size="lg"
+                  className="h-12 rounded-full px-6"
+                  onClick={() => scrollToSection("search")}
+                >
+                  Start Search
+                  <ArrowDownRight className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-12 rounded-full px-6"
+                  onClick={() => scrollToSection("techniques")}
+                >
+                  See Techniques
+                </Button>
+              </motion.div>
+
+              <motion.div
+                id="search"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              >
+                <div className="border-border/60 bg-background/78 rounded-[2rem] border p-5 shadow-xl backdrop-blur sm:p-8">
+                  <div className="mb-6 flex flex-col gap-2 text-left">
+                    <p className="text-sm font-semibold tracking-[0.18em] uppercase">
+                      Search
+                    </p>
+                    <p className="text-muted-foreground text-sm">
+                      Choose options. Type title. Open cleaner query.
+                    </p>
+                  </div>
+                  <SearchInput />
+                </div>
+              </motion.div>
+            </div>
           </section>
 
-          <motion.section
-            id="search"
-            className="scroll-mt-20"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          >
-            <SearchInput />
-          </motion.section>
-
-          <motion.section
-            id="about"
-            className="scroll-mt-20"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
-          >
+          <section id="signals" className="scroll-mt-24 pt-10">
             <About />
-          </motion.section>
+          </section>
         </div>
-      </div>
+      </main>
+
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: showScrollTop ? 1 : 0,
+          y: showScrollTop ? 0 : 16,
+          pointerEvents: showScrollTop ? "auto" : "none",
+        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="fixed right-4 bottom-4 z-50 sm:right-6 sm:bottom-6"
+      >
+        <Button
+          type="button"
+          size="icon"
+          onClick={scrollToTop}
+          className="h-12 w-12 rounded-full shadow-lg"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </Button>
+      </motion.div>
+
       <Footer scrollToSection={scrollToSection} />
     </>
   )

@@ -2,10 +2,16 @@
 
 import * as React from "react"
 import Image from "next/image"
-import { EngineOption, FileTypeOption } from "@/types"
-import { engineOptions, fileTypeOptions } from "@/utils"
+import { EngineOption, FileTypeOption, SearchModeOption } from "@/types"
+import {
+  buildSearchQuery,
+  buildSearchUrl,
+  engineOptions,
+  fileTypeOptions,
+  searchModeOptions,
+} from "@/utils"
 import { motion } from "framer-motion"
-import { Filter, Globe, PencilLine, Search, Sparkles } from "lucide-react"
+import { Crosshair, Filter, Globe, PencilLine, Search, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -23,45 +29,27 @@ export function SearchInput() {
     fileTypeOptions[0]
   )
   const [engine, setEngine] = React.useState<EngineOption>(engineOptions[0])
+  const [searchMode, setSearchMode] = React.useState<SearchModeOption>(
+    searchModeOptions[0]
+  )
   const [query, setQuery] = React.useState<string>("")
-
-  const startSearch = React.useCallback(async () => {
-    if (!query.trim()) return
-
-    let finalQuery = query
-    const baseFilter =
-      "-inurl:(jsp|pl|php|html|aspx|htm|cf|shtml) intitle:index.of -inurl:(listen77|mp3raid|mp3toss|mp3drug|index_of|index-of|wallywashis|downloadmana)"
-
-    if (!fileType || fileType.value === "-1") {
-      finalQuery = `${query} ${baseFilter}`
-    } else {
-      finalQuery = `${query} +(${fileType.value}) ${baseFilter}`
-    }
-
-    let url = ""
-    switch (engine.value) {
-      case "google":
-        url = `https://www.google.com/search?q=${encodeURIComponent(finalQuery)}`
-        break
-      case "bing":
-        url = `https://www.bing.com/search?q=${encodeURIComponent(finalQuery)}`
-        break
-      case "duckduckgo":
-        url = `https://duckduckgo.com/?q=${encodeURIComponent(finalQuery)}`
-        break
-      case "brave":
-        url = `https://search.brave.com/search?q=${encodeURIComponent(finalQuery)}`
-        break
-      default:
-        return
-    }
-
-    if (typeof window !== "undefined") window.open(url, "_blank")
-  }, [query, fileType, engine])
+  const finalQuery = buildSearchQuery(
+    engine.value,
+    query,
+    fileType,
+    searchMode.value
+  )
+  const searchUrl = buildSearchUrl(
+    engine.value,
+    query,
+    fileType,
+    searchMode.value
+  )
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    startSearch()
+    if (!searchUrl || typeof window === "undefined") return
+    window.open(searchUrl, "_blank")
   }
 
   return (
@@ -69,71 +57,88 @@ export function SearchInput() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      whileHover={{ y: -2 }}
     >
-      <div className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border p-6 shadow-sm">
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-            <div className="space-y-3">
-              <Label className="flex items-center gap-2 text-sm font-medium">
-                <Filter className="text-primary h-4 w-4" />
-                File Type
-              </Label>
-              <Select
-                value={fileType?.value || ""}
-                onValueChange={(value) =>
-                  setFileType(
-                    fileTypeOptions.find((opt) => opt.value === value) || null
-                  )
-                }
-              >
-                <SelectTrigger className="hover:border-primary/50 h-12 w-full transition-colors">
-                  <SelectValue placeholder="Select file type">
-                    {fileType ? (
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{fileType.icon}</span>
-                        <span>{fileType.label}</span>
-                      </div>
-                    ) : (
-                      <div className="text-muted-foreground flex items-center gap-2">
-                        <Sparkles className="h-4 w-4" />
-                        <span>Select file type</span>
-                      </div>
-                    )}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {fileTypeOptions.map((option) => (
-                    <SelectItem
-                      key={option.value}
-                      value={option.value}
-                      className="hover:bg-primary/10"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{option.icon}</span>
-                        <span>{option.label}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-3">
-              <Label className="flex items-center gap-2 text-sm font-medium">
-                <Globe className="text-primary h-4 w-4" />
-                Search Engine
-              </Label>
-              <Select
-                value={engine.value}
-                onValueChange={(value) =>
-                  setEngine(
-                    engineOptions.find((e) => e.value === value) ||
-                      engineOptions[0]
-                  )
-                }
-              >
-                <SelectTrigger className="hover:border-primary/50 h-12 w-full transition-colors">
-                  <SelectValue placeholder="Select engine">
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+          <div className="space-y-3">
+            <Label className="flex items-center gap-2 text-sm font-medium">
+              <Filter className="text-primary h-4 w-4" />
+              File Type
+            </Label>
+            <Select
+              value={fileType?.value || ""}
+              onValueChange={(value) =>
+                setFileType(
+                  fileTypeOptions.find((opt) => opt.value === value) || null
+                )
+              }
+            >
+              <SelectTrigger className="hover:border-primary/50 h-12 w-full transition-colors">
+                <SelectValue placeholder="Select file type">
+                  {fileType ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{fileType.icon}</span>
+                      <span>{fileType.label}</span>
+                    </div>
+                  ) : (
+                    <div className="text-muted-foreground flex items-center gap-2">
+                      <Sparkles className="h-4 w-4" />
+                      <span>Select file type</span>
+                    </div>
+                  )}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {fileTypeOptions.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    className="hover:bg-primary/10"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{option.icon}</span>
+                      <span>{option.label}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-3">
+            <Label className="flex items-center gap-2 text-sm font-medium">
+              <Globe className="text-primary h-4 w-4" />
+              Search Engine
+            </Label>
+            <Select
+              value={engine.value}
+              onValueChange={(value) =>
+                setEngine(
+                  engineOptions.find((e) => e.value === value) ||
+                    engineOptions[0]
+                )
+              }
+            >
+              <SelectTrigger className="hover:border-primary/50 h-12 w-full transition-colors">
+                <SelectValue placeholder="Select engine">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src={engine.logo}
+                      alt={engine.name}
+                      width={20}
+                      height={20}
+                      className="h-5 w-5 rounded-sm"
+                    />
+                    <span>{engine.name}</span>
+                  </div>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {engineOptions.map((engine) => (
+                  <SelectItem
+                    key={engine.value}
+                    value={engine.value}
+                    className="hover:bg-primary/10"
+                  >
                     <div className="flex items-center gap-2">
                       <Image
                         src={engine.logo}
@@ -144,58 +149,81 @@ export function SearchInput() {
                       />
                       <span>{engine.name}</span>
                     </div>
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {engineOptions.map((engine) => (
-                    <SelectItem
-                      key={engine.value}
-                      value={engine.value}
-                      className="hover:bg-primary/10"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Image
-                          src={engine.logo}
-                          alt={engine.name}
-                          width={20}
-                          height={20}
-                          className="h-5 w-5 rounded-sm"
-                        />
-                        <span>{engine.name}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="space-y-3">
             <Label className="flex items-center gap-2 text-sm font-medium">
-              <Search className="text-primary h-4 w-4" />
-              Search Query
+              <Crosshair className="text-primary h-4 w-4" />
+              Search Mode
             </Label>
-            <div className="relative">
-              <Input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={
-                  fileType ? fileType.placeholder : "Enter your search terms..."
-                }
-                className="pr-4 pl-12 md:h-14 md:text-base"
-              />
-              <PencilLine className="text-muted-foreground absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 transform" />
-            </div>
+            <Select
+              value={searchMode.value}
+              onValueChange={(value) =>
+                setSearchMode(
+                  searchModeOptions.find((mode) => mode.value === value) ||
+                    searchModeOptions[0]
+                )
+              }
+            >
+              <SelectTrigger className="hover:border-primary/50 h-12 w-full transition-colors">
+                <SelectValue placeholder="Select mode">
+                  <span>{searchMode.label}</span>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {searchModeOptions.map((mode) => (
+                  <SelectItem
+                    key={mode.value}
+                    value={mode.value}
+                    className="hover:bg-primary/10"
+                  >
+                    <div className="flex flex-col items-start">
+                      <span>{mode.label}</span>
+                      <span className="text-muted-foreground text-xs">
+                        {mode.description}
+                      </span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <div className="flex justify-center md:pt-4">
+        </div>
+        <div className="space-y-3">
+          <Label className="flex items-center gap-2 text-sm font-medium">
+            <Search className="text-primary h-4 w-4" />
+            Search Query
+          </Label>
+          <div className="relative">
+            <Input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={
+                fileType ? fileType.placeholder : "Enter your search terms..."
+              }
+              className="h-14 pr-4 pl-12 text-base"
+            />
+            <PencilLine className="text-muted-foreground absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 transform" />
+          </div>
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="space-y-3">
+              <p className="text-muted-foreground text-xs uppercase tracking-[0.16em]">
+                {searchMode.description}
+              </p>
+            </div>
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              className="md:ml-auto"
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
               <Button
                 type="submit"
-                className="w-full text-sm font-medium shadow-lg transition-all duration-200 hover:shadow-xl md:h-14 md:w-auto md:px-8 md:text-base"
+                className="h-14 w-full px-8 text-base font-medium md:w-auto"
                 disabled={!query.trim()}
               >
                 <Search className="h-5 w-5" />
@@ -217,8 +245,18 @@ export function SearchInput() {
               </Button>
             </motion.div>
           </div>
-        </form>
-      </div>
+          {finalQuery ? (
+            <div className="bg-muted/30 rounded-2xl border p-4">
+              <p className="text-muted-foreground mb-2 text-xs font-medium tracking-[0.16em] uppercase">
+                Search Pattern
+              </p>
+              <p className="text-foreground break-words font-mono text-xs leading-6 md:text-sm">
+                {finalQuery}
+              </p>
+            </div>
+          ) : null}
+        </div>
+      </form>
     </motion.div>
   )
 }

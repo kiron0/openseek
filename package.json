@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,css}\"",
     "upgrade": "bunx --bun ncu -u && bun install",
     "push": "git add . && git commit -m \"chore update\" && git push"

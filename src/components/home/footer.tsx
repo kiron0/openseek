@@ -1,6 +1,7 @@
 import { Config } from "@/config"
 import { motion } from "framer-motion"
-import { Github, Heart, Mail, Search, Twitter } from "lucide-react"
+import { Heart, Mail, Search } from "lucide-react"
+import { FaGithub, FaTwitter } from "react-icons/fa6";
 
 interface FooterProps {
   scrollToSection: (sectionId: string) => void
@@ -82,7 +83,7 @@ export function Footer({ scrollToSection }: FooterProps) {
                 whileTap={{ scale: 0.95 }}
                 variants={itemVariants}
               >
-                <Github className="h-4 w-4" />
+                <FaGithub className="h-4 w-4" />
               </motion.a>
               <motion.a
                 href={Config.author.twitter}
@@ -93,7 +94,7 @@ export function Footer({ scrollToSection }: FooterProps) {
                 whileTap={{ scale: 0.95 }}
                 variants={itemVariants}
               >
-                <Twitter className="h-4 w-4" />
+                <FaTwitter className="h-4 w-4" />
               </motion.a>
               <motion.a
                 href={`mailto:${Config.author.email}`}

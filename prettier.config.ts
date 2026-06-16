@@ -1,4 +1,6 @@
-module.exports = {
+import type { Config } from "prettier"
+
+const config: Config = {
   endOfLine: "lf",
   semi: false,
   singleQuote: false,
@@ -22,9 +24,10 @@ module.exports = {
     "^@/components/(.*)$",
     "^@/styles/(.*)$",
     "^@/app/(.*)$",
-    "^registry/(.*)$",
     "",
     "^[./]",
   ],
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
 }
+
+export default config

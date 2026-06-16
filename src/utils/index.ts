@@ -122,31 +122,14 @@ export const engineOptions: EngineOption[] = [
     name: "Bing",
     logo: "https://www.bing.com/favicon.ico",
   },
-  { value: "yandex", name: "Yandex", logo: "https://yandex.com/favicon.ico" },
-  { value: "baidu", name: "Baidu", logo: "https://www.baidu.com/favicon.ico" },
   {
     value: "duckduckgo",
     name: "DuckDuckGo",
     logo: "https://duckduckgo.com/favicon.ico",
   },
   {
-    value: "ecosia",
-    name: "Ecosia",
-    logo: "https://www.ecosia.org/favicon.ico",
-  },
-  {
-    value: "startpage",
-    name: "Startpage",
-    logo: "https://www.startpage.com/favicon.ico",
-  },
-  {
     value: "brave",
     name: "Brave Search",
     logo: "https://brave.com/favicon.ico",
-  },
-  {
-    value: "filepursuit",
-    name: "FilePursuit",
-    logo: "https://filepursuit.com/favicon.ico",
   },
 ]

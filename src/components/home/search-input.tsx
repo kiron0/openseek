@@ -33,13 +33,9 @@ export function SearchInput() {
       "-inurl:(jsp|pl|php|html|aspx|htm|cf|shtml) intitle:index.of -inurl:(listen77|mp3raid|mp3toss|mp3drug|index_of|index-of|wallywashis|downloadmana)"
 
     if (!fileType || fileType.value === "-1") {
-      finalQuery =
-        engine.value === "filepursuit" ? "all" : `${query} ${baseFilter}`
+      finalQuery = `${query} ${baseFilter}`
     } else {
-      finalQuery =
-        engine.value === "filepursuit"
-          ? fileType.resType
-          : `${query} +(${fileType.value}) ${baseFilter}`
+      finalQuery = `${query} +(${fileType.value}) ${baseFilter}`
     }
 
     let url = ""
@@ -50,26 +46,11 @@ export function SearchInput() {
       case "bing":
         url = `https://www.bing.com/search?q=${encodeURIComponent(finalQuery)}`
         break
-      case "yandex":
-        url = `https://yandex.com/search/?text=${encodeURIComponent(finalQuery)}`
-        break
-      case "baidu":
-        url = `https://www.baidu.com/s?wd=${encodeURIComponent(finalQuery)}`
-        break
       case "duckduckgo":
         url = `https://duckduckgo.com/?q=${encodeURIComponent(finalQuery)}`
         break
-      case "ecosia":
-        url = `https://www.ecosia.org/search?q=${encodeURIComponent(finalQuery)}`
-        break
-      case "startpage":
-        url = `https://www.startpage.com/do/dsearch?query=${encodeURIComponent(finalQuery)}`
-        break
       case "brave":
         url = `https://search.brave.com/search?q=${encodeURIComponent(finalQuery)}`
-        break
-      case "filepursuit":
-        url = `https://filepursuit.com/search/${query.trim().replace(/ /g, "+")}/type/${finalQuery}`
         break
       default:
         return

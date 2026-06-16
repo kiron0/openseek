@@ -10,7 +10,7 @@ OpenSeek is a powerful tool that helps you find direct download links for variou
 ### Features
 - Find open directories for videos, music, books, software, and more
 - Supports multiple file types: TV/Movies, Books, Music, Software/Games, Images, and Others
-- Choose from various search engines: Google, Bing, Yandex, Baidu, DuckDuckGo, Ecosia, Startpage, Brave Search, FilePursuit
+- Choose from supported search engines: Google, Bing, DuckDuckGo, Brave Search
 - Simple and intuitive UI
 - Dark mode support
 

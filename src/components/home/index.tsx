@@ -6,12 +6,11 @@ import { motion } from "framer-motion"
 import { ArrowDownRight, ArrowUp, Compass, Search } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-
+import { Button } from "@/components/ui/button"
 import { About } from "@/components/home/about"
 import { Footer } from "@/components/home/footer"
 import { SearchInput } from "@/components/home/search-input"
 import { ThemeSwitcher } from "@/components/theme-switcher"
-import { Button } from "@/components/ui/button"
 
 export function Home() {
   const [scrolled, setScrolled] = useState(false)

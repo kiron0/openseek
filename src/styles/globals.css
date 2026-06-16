@@ -120,8 +120,16 @@
   body {
     @apply bg-background text-foreground !overflow-x-hidden;
     background-image:
-      radial-gradient(circle at top, color-mix(in oklab, var(--color-primary) 12%, transparent), transparent 34%),
-      linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 85%, white), var(--color-background));
+      radial-gradient(
+        circle at top,
+        color-mix(in oklab, var(--color-primary) 12%, transparent),
+        transparent 34%
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--color-background) 85%, white),
+        var(--color-background)
+      );
   }
 }
 

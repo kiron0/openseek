@@ -81,7 +81,7 @@ export function About() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {techniqueCards.map((card, index) => (
             <motion.div
               key={card.title}
@@ -109,7 +109,7 @@ export function About() {
       </motion.div>
 
       <motion.div
-        className="grid gap-4 md:grid-cols-2"
+        className="grid gap-4 lg:grid-cols-2"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}

@@ -351,7 +351,11 @@ function buildExtensionClause(
   engine: EngineOption["value"],
   fileType: FileTypeOption | null
 ) {
-  if (!fileType || fileType.value === "-1" || fileType.extensions.length === 0) {
+  if (
+    !fileType ||
+    fileType.value === "-1" ||
+    fileType.extensions.length === 0
+  ) {
     return ""
   }
 
@@ -371,7 +375,10 @@ function buildHintClause(fileType: FileTypeOption | null) {
 }
 
 function buildExcludeClause(fileType: FileTypeOption | null) {
-  const excludedTerms = [...commonExcludeTerms, ...(fileType?.excludeTerms ?? [])]
+  const excludedTerms = [
+    ...commonExcludeTerms,
+    ...(fileType?.excludeTerms ?? []),
+  ]
 
   return excludedTerms.map((term) => `-inurl:${term}`).join(" ")
 }
@@ -392,12 +399,7 @@ export function buildSearchQuery(
   const excludeClause = buildExcludeClause(fileType)
 
   if (mode === "exact") {
-    return [
-      exactQueryClause,
-      `"index of"`,
-      extensionClause,
-      excludeClause,
-    ]
+    return [exactQueryClause, `"index of"`, extensionClause, excludeClause]
       .filter(Boolean)
       .join(" ")
   }

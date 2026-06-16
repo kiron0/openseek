@@ -11,7 +11,14 @@ import {
   searchModeOptions,
 } from "@/utils"
 import { motion } from "framer-motion"
-import { Crosshair, Filter, Globe, PencilLine, Search, Sparkles } from "lucide-react"
+import {
+  Crosshair,
+  Filter,
+  Globe,
+  PencilLine,
+  Search,
+  Sparkles,
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -211,7 +218,7 @@ export function SearchInput() {
           </div>
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="space-y-3">
-              <p className="text-muted-foreground text-xs uppercase tracking-[0.16em]">
+              <p className="text-muted-foreground text-xs tracking-[0.16em] uppercase">
                 {searchMode.description}
               </p>
             </div>
@@ -250,7 +257,7 @@ export function SearchInput() {
               <p className="text-muted-foreground mb-2 text-xs font-medium tracking-[0.16em] uppercase">
                 Search Pattern
               </p>
-              <p className="text-foreground break-words font-mono text-xs leading-6 md:text-sm">
+              <p className="text-foreground font-mono text-xs leading-6 break-words md:text-sm">
                 {finalQuery}
               </p>
             </div>
